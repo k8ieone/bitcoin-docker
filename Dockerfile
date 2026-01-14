@@ -3,8 +3,8 @@ ENV DEBIAN_FRONTEND=noninteractive
 ENV CCACHE_DIR=/ccache
 ENV CCACHE_COMPRESS=1
 ENV CCACHE_MAXSIZE=5G
-ARG deps="libevent-dev libboost-dev libcapnp-dev capnproto libzmq3-dev systemtap-sdt-dev"
-RUN apt update && apt install -y build-essential git wget cmake pkgconf ccache $deps
+ARG builddeps="libevent-dev libboost-dev libcapnp-dev capnproto libzmq3-dev systemtap-sdt-dev"
+RUN apt update && apt install -y build-essential git wget cmake pkgconf ccache $builddeps
 # The Bitcoin Core signing keys
 # Commit is just the latest I picked, could be any trusted commit, we just want to avoid main
 RUN git clone https://github.com/bitcoin-core/guix.sigs.git && cd guix.sigs && git checkout 6490653f3135584f13db6df113318371f9876633
@@ -30,5 +30,6 @@ RUN cmake --install build
 
 FROM ubuntu:latest AS runner
 COPY --from=builder /usr/local/bin /usr/local/bin
-RUN apt update && apt install -y $deps
+ARG rundeps="libevent-core-2.1-7t64 libevent-extra-2.1-7t64 libevent-pthreads-2.1-7t64"
+RUN apt update && apt install -y $rundeps
 ENTRYPOINT ["bitcoind"]
