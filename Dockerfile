@@ -21,7 +21,7 @@ RUN gpg --verify SHA256SUMS.asc SHA256SUMS
 # Let's go build stuff
 RUN tar -xzf bitcoin-$version.tar.gz
 WORKDIR /bitcoin-$version
-RUN --mount=type=cache,target=/ccache cmake -B build -DENABLE_WALLET=OFF -DBUILD_GUI=OFF -DCMAKE_C_COMPILER_LAUNCHER=ccache -DCMAKE_CXX_COMPILER_LAUNCHER=ccache
+RUN --mount=type=cache,target=/ccache cmake -B build -DWITH_ZMQ=ON -DENABLE_WALLET=OFF -DBUILD_GUI=OFF -DCMAKE_C_COMPILER_LAUNCHER=ccache -DCMAKE_CXX_COMPILER_LAUNCHER=ccache
 WORKDIR /bitcoin-$version/build
 RUN --mount=type=cache,target=/ccache make -j$(nproc)
 RUN --mount=type=cache,target=/ccache ccache -s
