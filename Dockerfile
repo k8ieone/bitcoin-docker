@@ -30,6 +30,6 @@ RUN cmake --install build
 
 FROM ubuntu:latest AS runner
 COPY --from=builder /usr/local/bin /usr/local/bin
-ARG rundeps="libevent-core-2.1-7t64 libevent-extra-2.1-7t64 libevent-pthreads-2.1-7t64"
+ARG rundeps="libevent-core-2.1-7t64 libevent-extra-2.1-7t64 libevent-pthreads-2.1-7t64 libzmq5"
 RUN apt update && apt install -y $rundeps
 ENTRYPOINT ["bitcoind"]
