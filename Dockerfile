@@ -10,7 +10,7 @@ RUN apt update && apt install -y build-essential git wget cmake pkgconf ccache $
 RUN git clone https://github.com/bitcoin-core/guix.sigs.git && cd guix.sigs && git checkout 6490653f3135584f13db6df113318371f9876633
 RUN gpg --import guix.sigs/builder-keys/*.gpg
 # Let's start gathering sources
-ARG version=31.0
+ARG version=31.1
 RUN wget https://bitcoincore.org/bin/bitcoin-core-$version/bitcoin-$version.tar.gz
 RUN wget https://bitcoincore.org/bin/bitcoin-core-$version/SHA256SUMS
 RUN wget https://bitcoincore.org/bin/bitcoin-core-$version/SHA256SUMS.asc
